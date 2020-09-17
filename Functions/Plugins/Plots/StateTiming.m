@@ -2,9 +2,9 @@ function StateTiming(t0)
 %STATETIMING Display timing of Bpod states
 %   STATETIMING visualizes the state timings of a Bpod's most recently run
 %   trial. It only has one optional parameter, T0, that can be used to
-%   shift the x-axis by a user-defined of seconds. This can be useful if
-%   you want to display the state timings relative to a specific event
-%   (e.g., the onset of a stimulus).
+%   shift the x-axis by a user-defined amount of seconds. This can be
+%   useful if you want to display the state timings relative to a specific
+%   event (e.g., the onset of a stimulus).
 
 %   Copyright (C) 2020 Florian Rau
 % 
@@ -68,16 +68,15 @@ end
 
 % plot state timings
 for idxState = 1:nStates
-    x = timings{idxState};
-    x = [x fliplr(x)]';
+    x = [timings{idxState} fliplr(timings{idxState})]';
     y = repmat(idxState + hBar./[2;2;-2;-2],1,size(x,2));
-    c = colors(mod(idxState-1,size(colors,1))+1,:);
+    c = colors(mod(idxState - 1, size(colors,1)) + 1,:);
     patch(hAx,x,y,c)
 end
 
 % format axes & labels
 set(hAx, ...
     'YTick',        1:nStates, ...
-    'YTickLabel', 	names, ...
-    'YLim',       	[.5 nStates+.5])
+    'YTickLabel',   names, ...
+    'YLim',         [.5 nStates+.5])
 title(hAx,sprintf('State Timing, Trial %d',nTrial))
